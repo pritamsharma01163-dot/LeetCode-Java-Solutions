@@ -1,0 +1,29 @@
+class Solution {
+    public int majorityElement(int[] nums) {
+        return majorityElementRec(nums,0,nums.length-1);
+    }
+    private static int majorityElementRec(int[] nums, int lo, int hi){
+        if(lo== hi){
+            return nums[lo];
+
+        }
+        int mid=(hi-lo)/2+lo;
+        int left= majorityElementRec(nums,lo,mid);
+        int right= majorityElementRec(nums,mid+1,hi);
+        if(left==right){
+            return left;
+        }
+        int leftCount=countINRange(nums,left,lo,hi);
+        int rightCount=countINRange(nums,right,lo,hi);
+        return leftCount>rightCount?left:right;
+    }
+    private static int countINRange(int [] nums,int num,int lo, int hi){
+        int count=0;
+        for(int i=lo;i<=hi;i++){
+            if(nums[i]==num){
+                count++;
+            }
+        }
+        return count;
+    }
+}
